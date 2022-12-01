@@ -4,14 +4,16 @@
   </el-button>
   <div class="y-choose-icon-dialog-body-height">
     <el-dialog :title="title" v-model="dialogVisible">
-      <div class="container" @click.stop="clickItem">
-        <div class="item" v-for="(item) in Object.keys(ElementPlusIconsVue)" :key="item" :data-item="item">
-          <div class="icon">
-            <component :is="`el-icon${toLine(item)}`"></component>
+      <el-scrollbar height="500px">
+        <div class="container" @click.stop="clickItem">
+          <div class="item" v-for="(item) in Object.keys(ElementPlusIconsVue)" :key="item" :data-item="item">
+            <div class="icon">
+              <component :is="`el-icon${toLine(item)}`"></component>
+            </div>
+            <div>{{ item }}</div>
           </div>
-          <div>{{ item }}</div>
         </div>
-      </div>
+      </el-scrollbar>
     </el-dialog>
   </div>
 
