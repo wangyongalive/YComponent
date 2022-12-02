@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="chooseArea">
 import { ref, watch } from 'vue'
 import allAreas from '../lib/pca-code.json'
 

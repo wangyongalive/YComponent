@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import chooseArea from '../../components/chooseArea/src/index.vue'
+// import chooseArea from '../../components/chooseArea/src/index.vue'
 
-const handleChange = (data) => {
+const handleChange = (data: any) => {
   console.log(data)
 }
 </script>
