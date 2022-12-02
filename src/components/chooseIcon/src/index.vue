@@ -50,7 +50,7 @@ const clickItem = (e: any) => {
   // 事件代理
   let target = eventProxy(e, '.item')
   // 获取文本
-  let text = `<el-icon-${toLine(target.dataset.item)} />`
+  let text = `<el-icon${toLine(target.dataset.item)} />`
   // 复制文本
   useCopy(text)
   // 关闭弹框
