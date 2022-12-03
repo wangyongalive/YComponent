@@ -1,6 +1,7 @@
 <template>
   <div class="trend">
-    <div class="text">
+    <!-- 利用computed简化模板 -->
+    <div class="text" :style="{ color: textColor }">
       <!-- 默认插槽 default
       slot 优先级更高 如果有slot 就不显示props.text
       -->
@@ -11,14 +12,20 @@
       </div>
     </div>
     <div class="icon">
-      <el-icon-arrow-up v-if="type == 'up'" :style="{ color: !reverseColor ? upIconColor : '#52c41a' }" />
-      <el-icon-arrow-down v-else :style="{ color: !reverseColor ? downIconColor : '#f5222d' }" />
+      <component :is="`el-icon${toLine(upIcon)}`" v-if="type == 'up'"
+        :style="{ color: !reverseColor ? upIconColor : '#52c41a' }">
+      </component>
+      <component :is="`el-icon${toLine(downIcon)}`" v-else
+        :style="{ color: !reverseColor ? downIconColor : '#f5222d' }">
+      </component>
+
     </div>
   </div>
 </template>
 
 <script setup lang="ts" name="trend">
-import { useSlots } from 'vue'
+import { useSlots, computed } from 'vue'
+import { toLine } from '@/utls/index'
 // 定义props 自定义颜色 文本等
 const props = defineProps({
   // 标记当前趋势是上升还是下降
@@ -38,6 +45,16 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  // 上升趋势图标
+  upIcon: {
+    type: String,
+    default: 'ArrowUp'
+  },
+  // 下降趋势图标
+  downIcon: {
+    type: String,
+    default: 'ArrowDown'
+  },
   // 上升趋势图标颜色
   upIconColor: {
     type: String,
@@ -48,10 +65,24 @@ const props = defineProps({
     type: String,
     default: '#52c41a'
   },
+  // 上升趋势文字颜色
+  upTextColor: {
+    type: String,
+    default: 'rgb(0,0,0)'
+  },
+  // 下降趋势文字颜色
+  downTextColor: {
+    type: String,
+    default: 'rgb(0,0,0)'
+  },
 })
 // 获取插槽内容
 const slots = useSlots()
-console.log(slots)
+
+// 文字颜色
+const textColor = computed(() => {
+  return props.type === 'up' ? props.upTextColor : props.downTextColor
+})
 </script>
 
 <style scoped lang="scss">

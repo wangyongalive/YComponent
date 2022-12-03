@@ -11,3 +11,4 @@ export const eventProxy = (e: any, query: string) => {
   }
   return target
 }
+
