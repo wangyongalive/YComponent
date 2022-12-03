@@ -1,6 +1,11 @@
 <template>
   <div>
-    <notification :value="30" :max="20" :isDot="false"></notification>
+    <notification :value="30" :max="20" :isDot="false">
+
+      <template #default>
+        <list />
+      </template>
+    </notification>
   </div>
 </template>
 

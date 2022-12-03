@@ -1,8 +1,20 @@
 <template>
   <div>
-    <el-badge :value="value" :max="max" :is-Dot="isDot">
-      <component :is="`el-icon${toLine(icon)}`"></component>
-    </el-badge>
+    <el-popover placement="bottom" :width="200" trigger="click">
+      <!-- <template #default> 是popover的默认插槽 -->
+      <template #default>
+        <!-- <slot name="default"> 是外部传递进来的 -->
+        <slot name="default">
+        </slot>
+      </template>
+
+      <template #reference>
+        <el-badge style="cursor: pointer;" :value="value" :max="max" :is-Dot="isDot">
+          <component :is="`el-icon${toLine(icon)}`"></component>
+        </el-badge>
+      </template>
+    </el-popover>
+
   </div>
 </template>
 
