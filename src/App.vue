@@ -9,4 +9,8 @@
 <style lang="scss">
 @import "./styles/ui.scss";
 @import "./styles/base.scss";
+
+.y-pop {
+  padding: 0 !important;
+}
 </style>

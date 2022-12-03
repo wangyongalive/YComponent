@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-popover placement="bottom" :width="200" trigger="click">
+    <el-popover placement="bottom" :width="300" trigger="click" popper-class="y-pop">
       <!-- <template #default> 是popover的默认插槽 -->
       <template #default>
         <!-- <slot name="default"> 是外部传递进来的 -->
@@ -14,7 +14,6 @@
         </el-badge>
       </template>
     </el-popover>
-
   </div>
 </template>
 

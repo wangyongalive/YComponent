@@ -3,7 +3,7 @@
     <slot></slot>
   </el-button>
   <div class="y-choose-icon-dialog-body-height">
-    <el-dialog :title="title" v-model="dialogVisible">
+    <el-dialog :title="title" v-model="dialogVisible" class="y-dialog">
       <el-scrollbar height="500px">
         <div class="container" @click.stop="clickItem">
           <div class="item" v-for="(item) in Object.keys(ElementPlusIconsVue)" :key="item" :data-item="item">
@@ -88,5 +88,11 @@ watch(() => dialogVisible.value, (val) => {
 svg {
   width: 2em;
   height: 2em;
+}
+
+
+// 弹出框没有data-v属性 需要使用:deep(选择器) 不需要定义一个命名空间
+:deep(.y-dialog) {
+  // background-color: black;
 }
 </style>
