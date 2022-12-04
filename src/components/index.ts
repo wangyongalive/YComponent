@@ -4,7 +4,8 @@ import chooseIcon from './chooseIcon/index'
 import trend from './trend/index'
 import notification from './notification/index'
 import list from './list/index'
-const components = [chooseArea, chooseIcon, trend, notification, list]
+import menu from './menu/index'
+const components = [chooseArea, chooseIcon, trend, notification, list, menu]
 
 export default {
   install(app: App) {
