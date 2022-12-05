@@ -50,6 +50,11 @@ let data = [
     index: '/chooseTime'
   },
   {
+    icon: 'Wallet',
+    name: '日期选择',
+    index: '/chooseDate'
+  },
+  {
     icon: 'Bell',
     name: '通知菜单',
     index: '/notification'
