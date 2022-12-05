@@ -27,17 +27,19 @@
         </el-col>
       </el-row>
       <div class="city">
-        <div class="city-item" v-for="(val, key) in city.cities" :key="key">
+        <div class="city-item" v-for="(val, key) in city.cities" :key="key" @click="clickChat(key)">
           {{ key }}</div>
       </div>
       <el-scrollbar max-height="300px">
         <template v-for="(val, key) in city.cities">
-          <el-row>
+          <el-row style="margin-bottom: 10px;" :id="key">
             <el-col :span="2">
               <div>{{ key }}</div>
             </el-col>
             <el-col :span="22" class="city-name">
-              <div class="city-name-item" v-for="(item, index) in val" :key="item.id">{{ item.name }}</div>
+              <div class="city-name-item" v-for="(item, index) in val" :key="item.id" @click="clickItem(item)">{{
+                  item.name
+              }}</div>
             </el-col>
           </el-row>
 
@@ -48,8 +50,13 @@
 </template>
 
 <script setup lang="ts">
+import { emit } from 'process';
 import { ref } from 'vue'
 import city from '../lib/city'
+import { City } from './types';
+
+const emits = defineEmits(['changeCity'])
+
 // 最终选择的结果
 let result = ref<string>('请选择')
 // 控制弹出层的显示
@@ -80,6 +87,21 @@ const options = [
     label: 'Option5',
   },
 ]
+
+// 点击每个城市
+const clickItem = (item: City) => {
+  result.value = item.name
+  visible.value = false
+  emits('changeCity', item)
+}
+
+
+// 点击字母区域
+let clickChat = (key: string) => {
+  let el = document.getElementById(key)
+  // Element 接口的 scrollIntoView() 方法会滚动元素的父容器，使被调用 scrollIntoView() 的元素对用户可见
+  if (el) el.scrollIntoView()
+}
 
 </script>
 
