@@ -5,3 +5,9 @@ export interface City {
   // 名字
   name: string
 }
+
+export interface Provice {
+  name: string,
+  id?: string,
+  data: string[]
+}
