@@ -129,6 +129,7 @@ let changeSelect = (val: number) => {
 // 自定义搜索过滤
 let filterMethod = (val: string) => {
   // 所有城市数据
+  console.log('val', val)
   const values = Object.values(city.cities).flat(2)
   if (val === '') {
     options.value = values
