@@ -3,8 +3,16 @@
     <template v-for="(item, index) in options" :key="index">
       <!-- 没有子组件的情况 -->
       <el-form-item v-if="!item.children || !item.children!.length" :prop="item.prop" :label="item.label">
-        <component v-bind="item.attrs" :placeholder="item.placeholder" :is="`el-${item.type}`"
-          v-model="model[item.prop!]"></component>
+        <component v-if="item.type !== 'upload'" v-bind="item.attrs" :placeholder="item.placeholder"
+          :is="`el-${item.type}`" v-model="model[item.prop!]"></component>
+        <el-upload v-if="item.type === 'upload'" v-bind="item.uploadAttrs" :on-preview="onPreview" :on-remove="onRemove"
+          :on-success="onSuccess" :on-error="onError" :on-progress="onProgress" :on-change="onChange"
+          :before-upload="beforeUpload" :before-remove="beforeRemove" :http-request="httpRequest" :on-exceed="onExceed">
+          <slot name="uploadArea"></slot>
+          <template #tip>
+              <slot name="uploadTip"></slot>
+          </template>
+        </el-upload>
       </el-form-item>
       <!-- 有子组件的情况 -->
       <el-form-item v-if="item.children && item.children.length" :prop="item.prop" :label="item.label">
@@ -25,12 +33,18 @@ import { FormOptions } from './types/types';
 import cloneDeep from 'lodash/cloneDeep';
 
 
+const emits = defineEmits(['on-preview', 'on-remove', 'on-success', 'on-error', 'on-progress', 'on-change', 'before-upload', 'before-remove', 'on-exceed'])
+
 const props = defineProps({
   // 表单的配置项
   options: {
     // 类型验证
     type: Array as PropType<FormOptions[]>,
     required: true
+  },
+  // 用户自定义上传方法
+  httpRequest: {
+    type: Function
   }
 })
 
@@ -63,6 +77,41 @@ onMounted(() => {
 watch(() => props.options, () => {
   initForm()
 }, { deep: true })
+
+
+
+// 上传组件的所有方法
+let onPreview = (file: File) => {
+  emits('on-preview', file)
+}
+let onRemove = (file: File, fileList: FileList) => {
+  emits('on-remove', { file, fileList })
+}
+let onSuccess = (response: any, file: File, fileList: FileList) => {
+  // 上传图片成功 给表单上传项赋值
+  // let uploadItem = props.options.find(item => item.type === 'upload')!
+  // model.value[uploadItem.prop!] = { response, file, fileList }
+  emits('on-success', { response, file, fileList })
+}
+let onError = (err: any, file: File, fileList: FileList) => {
+  emits('on-error', { err, file, fileList, })
+}
+let onProgress = (event: any, file: File, fileList: FileList) => {
+  emits('on-progress', { event, file, fileList })
+}
+let onChange = (file: File, fileList: FileList) => {
+  emits('on-change', { file, fileList })
+}
+let beforeUpload = (file: File) => {
+  emits('before-upload', file)
+}
+let beforeRemove = (file: File, fileList: FileList) => {
+  emits('before-remove', { file, fileList })
+}
+let onExceed = (files: File, fileList: FileList) => {
+  emits('on-exceed', { files, fileList })
+}
+
 </script>
 
 <style scoped>
