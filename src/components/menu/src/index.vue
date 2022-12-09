@@ -3,7 +3,7 @@
     <template v-for="(item, i) in data" :key="i">
       <!-- 一级菜单 -->
       <el-menu-item v-if="(!item[children] || !item[children].length)" :index="item[index]">
-        <component v-if="item[icon]" :is="`el-icon${toLine(item[icon])}`">
+        <component v-if="item[icon]" :is="`el-icon${toLine(item[icon])}`" style="margin-right: 4px;">
         </component>
         <span>{{ item[name] }}</span>
       </el-menu-item>

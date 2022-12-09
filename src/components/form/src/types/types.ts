@@ -1,3 +1,4 @@
+import { CSSProperties } from "vue";
 import { RuleItem } from "./rule";
 
 // 表单每一项的配置选项
@@ -18,9 +19,12 @@ export interface FormOptions {
   // 表单元素的占位符
   placeholder?: string
   // 表单元素特有的属性
-  attrs: {
+  attrs?: {
+    style?: CSSProperties,
     clearable?: boolean,
     showPassword?: boolean,
     disabled?: boolean
-  }
+  },
+  // 表单项的子元素
+  children?: FormOptions[],
 }
