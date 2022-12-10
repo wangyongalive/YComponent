@@ -111,8 +111,24 @@ const resetFields = () => {
   }
 }
 
+
+// 表单验证方法  返回的是表单校验的方法
+const validate = () => {
+  return form.value!.validate
+}
+
+
+// 获取表单数据
+const getFormData = () => {
+  return model.value
+}
+
+// 分发方法
 defineExpose({
-  resetFields
+  resetFields,
+  validate,
+  getFormData,
+  // model: model.value  // 这种只能获取到初始值
 })
 
 onMounted(() => {
