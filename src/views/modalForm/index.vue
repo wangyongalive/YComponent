@@ -1,12 +1,22 @@
 <template>
   <div>
     <el-button type="primary" size="default" @click="open">open</el-button>
-    <y-modal-form v-model:visible="visible" :options="options">
+    <y-modal-form isScroll v-model:visible="visible" :options="options" title="编辑用户" width="50%"
+      :on-change="handleChange" :on-success="handleSuccess">
       <template #footer="{ form }">
         <el-button @click="cancel(form)">取消</el-button>
         <el-button type="primary" @click="confirm(form)">
           确定
         </el-button>
+      </template>
+      <!-- template相互嵌套 -->
+      <template #uploadArea>
+        <el-button type="primary">Click to upload</el-button>
+      </template>
+      <template #uploadTip>
+        <div style="color:#eee">
+          jpg/png files with a size less than 501KB.
+        </div>
       </template>
     </y-modal-form>
   </div>
@@ -36,6 +46,15 @@ const confirm = (form: any) => {
       ElMessage.error('表单填写有误,请检查')
     }
   })
+}
+
+const handleSuccess = (val: any) => {
+  console.log('handleSuccess')
+  console.log(val)
+}
+const handleChange = (val: any) => {
+  console.log('handleChange')
+  console.log(val)
 }
 
 const options: FormOptions[] = [
@@ -182,37 +201,37 @@ const options: FormOptions[] = [
       }
     ]
   },
-  // {
-  //   type: 'upload',
-  //   label: '上传',
-  //   prop: 'pic',
-  //   uploadAttrs: {
-  //     action: 'https://jsonplaceholder.typicode.com/posts/',
-  //     multiple: true,
-  //     limit: 3
-  //   },
-  //   rules: [
-  //     {
-  //       required: true,
-  //       message: '图片不能为空',
-  //       trigger: 'blur'
-  //     }
-  //   ],
-  // },
-  // {
-  //   type: 'editor',
-  //   value: '',
-  //   prop: 'desc',
-  //   label: '描述',
-  //   placeholder: '请输入描述',
-  //   rules: [
-  //     {
-  //       required: true,
-  //       message: '描述不能为空',
-  //       trigger: 'blur'
-  //     }
-  //   ]
-  // }
+  {
+    type: 'upload',
+    label: '上传',
+    prop: 'pic',
+    uploadAttrs: {
+      action: 'https://jsonplaceholder.typicode.com/posts/',
+      multiple: true,
+      limit: 3
+    },
+    rules: [
+      {
+        required: true,
+        message: '图片不能为空',
+        trigger: 'blur'
+      }
+    ],
+  },
+  {
+    type: 'editor',
+    value: '',
+    prop: 'desc',
+    label: '描述',
+    placeholder: '请输入描述',
+    rules: [
+      {
+        required: true,
+        message: '描述不能为空',
+        trigger: 'blur'
+      }
+    ]
+  }
 ]
 </script>
 

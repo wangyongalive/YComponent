@@ -32,7 +32,7 @@ interface Scope {
 
 const form = ref<any>()
 
-// input 校验是blur 其余大部分都是change
+// input 校验是blur  多选、单选校验是change
 const options: FormOptions[] = [
   {
     type: 'input',
