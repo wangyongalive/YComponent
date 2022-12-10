@@ -11,13 +11,21 @@
           jpg/png files with a size less than 501KB.
         </div>
       </template>
+      <template #action="scope">
+        <el-button type="primary" @click="submitForm(scope)">提交</el-button>
+        <el-button @click="resetForm(scope)">重置</el-button>
+      </template>
     </y-form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { FormOptions } from '../../components/form/src/types/types';
+import { FormOptions, FormInstance } from '../../components/form/src/types/types';
 import { ElMessage, ElMessageBox } from 'element-plus'
+interface Scope {
+  form: FormInstance,
+  model: any
+}
 
 // input 校验是blur 其余大部分都是change
 const options: FormOptions[] = [
@@ -160,19 +168,39 @@ const options: FormOptions[] = [
   {
     type: "upload",
     label: "上传",
-    rules: [
-      {
-        required: true,
-        message: '图片不能为空',
-        trigger: 'blur'
-      }
-    ],
+    prop: 'pic',
+    // rules: [
+    //   {
+    //     required: true,
+    //     message: '图片不能为空',
+    //     trigger: 'blur'
+    //   }
+    // ],
     uploadAttrs: {
-      action: "https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+      action: "https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15",
+      multiple: true,
+      limit: 3
     }
   }
 ]
 
+
+// 表单提交
+const submitForm = (scope: Scope) => {
+  scope.form.validate((valid) => {
+    if (valid) {
+      console.log(scope.model)
+      ElMessage.success('提交成功')
+    } else {
+      ElMessage.error('表单填写有误，请重新填写!!!')
+    }
+  })
+}
+
+// 表单重置 
+const resetForm = (scope: Scope) => {
+  scope.form.resetFields()
+}
 
 
 let handleRemove = (file: any, fileList: any) => {

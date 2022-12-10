@@ -1,5 +1,5 @@
 <template>
-  <el-form v-if="model" :validate-on-rule-change="false" v-bind="$attrs" :model="model" :rules="rules">
+  <el-form ref="form" v-if="model" :validate-on-rule-change="false" v-bind="$attrs" :model="model" :rules="rules">
     <template v-for="(item, index) in options" :key="index">
       <!-- 没有子组件的情况 -->
       <el-form-item v-if="!item.children || !item.children!.length" :prop="item.prop" :label="item.label">
@@ -10,7 +10,7 @@
           :before-upload="beforeUpload" :before-remove="beforeRemove" :http-request="httpRequest" :on-exceed="onExceed">
           <slot name="uploadArea"></slot>
           <template #tip>
-              <slot name="uploadTip"></slot>
+            <slot name="uploadTip"></slot>
           </template>
         </el-upload>
       </el-form-item>
@@ -24,12 +24,17 @@
         </component>
       </el-form-item>
     </template>
+    <el-form-item>
+      <!-- 提交 重置等按钮 -->
+      <!-- 作用域插槽 把表单和表单的值传递出去 -->
+      <slot name="action" :form="form" :model="model"></slot>
+    </el-form-item>
   </el-form>
 </template>
 
 <script setup lang="ts">
 import { PropType, ref, onMounted, watch } from 'vue';
-import { FormOptions } from './types/types';
+import { FormOptions, FormInstance } from './types/types';
 import cloneDeep from 'lodash/cloneDeep';
 
 
@@ -42,7 +47,7 @@ const props = defineProps({
     type: Array as PropType<FormOptions[]>,
     required: true
   },
-  // 用户自定义上传方法
+  // **用户自定义上传方法  自定义**
   httpRequest: {
     type: Function
   }
@@ -52,6 +57,7 @@ const props = defineProps({
 // v-if="model" 来解决
 const model = ref<any>(null)
 const rules = ref<any>(null)
+const form = ref<FormInstance | null>()
 
 // 初始化表单
 const initForm = () => {
@@ -113,7 +119,3 @@ let onExceed = (files: File, fileList: FileList) => {
 }
 
 </script>
-
-<style scoped>
-
-</style>
