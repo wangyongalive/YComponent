@@ -22,6 +22,8 @@
 <script setup lang="ts">
 import { FormOptions, FormInstance } from '../../components/form/src/types/types';
 import { ElMessage, ElMessageBox } from 'element-plus'
+
+
 interface Scope {
   form: FormInstance,
   model: any
@@ -169,18 +171,30 @@ const options: FormOptions[] = [
     type: "upload",
     label: "上传",
     prop: 'pic',
-    // rules: [
-    //   {
-    //     required: true,
-    //     message: '图片不能为空',
-    //     trigger: 'blur'
-    //   }
-    // ],
+    rules: [
+      {
+        required: true,
+        message: '图片不能为空',
+        trigger: 'blur'
+      }
+    ],
     uploadAttrs: {
       action: "https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15",
       multiple: true,
       limit: 3
     }
+  },
+  {
+    type: 'editor',
+    value: "123",
+    prop: 'desc',
+    label: "描述",
+    placeholder: '请输入内容',
+    rules: [{
+      required: true,
+      message: '描述不能为空',
+      trigger: 'blur'
+    }]
   }
 ]
 

@@ -12,7 +12,8 @@
     "@element-plus/icons-vue": "^2.0.10",
     "element-plus": "^2.2.25",
     "vue": "^3.2.41",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "wangeditor": "^4.7.15"
   },
   "devDependencies": {
     "@types/node": "^18.11.10",

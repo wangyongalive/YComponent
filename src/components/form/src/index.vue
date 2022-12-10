@@ -3,8 +3,8 @@
     <template v-for="(item, index) in options" :key="index">
       <!-- 没有子组件的情况 -->
       <el-form-item v-if="!item.children || !item.children!.length" :prop="item.prop" :label="item.label">
-        <component v-if="item.type !== 'upload'" v-bind="item.attrs" :placeholder="item.placeholder"
-          :is="`el-${item.type}`" v-model="model[item.prop!]"></component>
+        <component v-if="item.type !== 'upload' && item.type !== 'editor'" v-bind="item.attrs"
+          :placeholder="item.placeholder" :is="`el-${item.type}`" v-model="model[item.prop!]"></component>
         <el-upload v-if="item.type === 'upload'" v-bind="item.uploadAttrs" :on-preview="onPreview" :on-remove="onRemove"
           :on-success="onSuccess" :on-error="onError" :on-progress="onProgress" :on-change="onChange"
           :before-upload="beforeUpload" :before-remove="beforeRemove" :http-request="httpRequest" :on-exceed="onExceed">
@@ -13,6 +13,7 @@
             <slot name="uploadTip"></slot>
           </template>
         </el-upload>
+        <div id="editor" v-if="item.type === 'editor'"></div>
       </el-form-item>
       <!-- 有子组件的情况 -->
       <el-form-item v-if="item.children && item.children.length" :prop="item.prop" :label="item.label">
@@ -33,9 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, onMounted, watch } from 'vue';
+import { PropType, ref, onMounted, watch, nextTick } from 'vue';
 import { FormOptions, FormInstance } from './types/types';
 import cloneDeep from 'lodash/cloneDeep';
+import E from "wangeditor"
 
 
 const emits = defineEmits(['on-preview', 'on-remove', 'on-success', 'on-error', 'on-progress', 'on-change', 'before-upload', 'before-remove', 'on-exceed'])
@@ -65,9 +67,29 @@ const initForm = () => {
   if (props.options && props.options.length) {
     let m: any = {};
     let r: any = {};
+
     props.options.map((item: FormOptions) => {
       m[item.prop!] = item.value;
       r[item.prop!] = item.rules;
+      //编辑
+      if (item.type === 'editor') {
+        // 等待下一次 DOM 更新刷新的工具方法
+        nextTick(() => {
+          // 初始化富文本编辑器
+          const editor = new E("#editor")
+          // placeholder
+          editor.config.placeholder = item.placeholder!
+          editor.create()
+          // 设置初始化内容
+          editor.txt.html(item.value) // 重新设置编辑器内容
+
+          // 配置 onchange 回调函数
+          editor.config.onchange = function (newHtml: string) {
+            model.value[item.prop!] = newHtml;
+          };
+
+        })
+      }
     })
     // 深拷贝
     model.value = cloneDeep(m)
