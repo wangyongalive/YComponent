@@ -60,6 +60,8 @@ const props = defineProps({
 const model = ref<any>(null)
 const rules = ref<any>(null)
 const form = ref<FormInstance | null>()
+let edit: any = null // 保存edit的引用
+
 
 // 初始化表单
 const initForm = () => {
@@ -87,7 +89,7 @@ const initForm = () => {
           editor.config.onchange = function (newHtml: string) {
             model.value[item.prop!] = newHtml;
           };
-
+          edit = editor // editor的引用
         })
       }
     })
@@ -96,6 +98,22 @@ const initForm = () => {
     rules.value = cloneDeep(r)
   }
 }
+
+// 表单重置
+const resetFields = () => {
+  // 重置element-plus的表单
+  form.value?.resetFields()
+  // 重置富文本编辑器的内容
+  // 获取到富文本的配置项
+  if (props.options && props.options.length) {
+    let editItem = props.options.find(item => item.type === 'editor')
+    edit.txt.html(editItem?.value) // 重置
+  }
+}
+
+defineExpose({
+  resetFields
+})
 
 onMounted(() => {
   initForm()

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <y-form label-width="100px" :options="options" @on-change="handleChange" @before-upload="handleBeforeUpload"
-      @on-preview="handlePreview" @on-remove="handleRemove" @before-remove="beforeRemove" @on-success="handleSuccess"
-      @on-exceed="handleExceed">
+    <y-form ref="form" label-width="100px" :options="options" @on-change="handleChange"
+      @before-upload="handleBeforeUpload" @on-preview="handlePreview" @on-remove="handleRemove"
+      @before-remove="beforeRemove" @on-success="handleSuccess" @on-exceed="handleExceed">
       <template #uploadArea>
         <el-button type="primary">Click to upload</el-button>
       </template>
@@ -13,7 +13,7 @@
       </template>
       <template #action="scope">
         <el-button type="primary" @click="submitForm(scope)">提交</el-button>
-        <el-button @click="resetForm(scope)">重置</el-button>
+        <el-button @click="resetForm">重置</el-button>
       </template>
     </y-form>
   </div>
@@ -22,12 +22,15 @@
 <script setup lang="ts">
 import { FormOptions, FormInstance } from '../../components/form/src/types/types';
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref } from 'vue';
 
 
 interface Scope {
   form: FormInstance,
   model: any
 }
+
+const form = ref<any>()
 
 // input 校验是blur 其余大部分都是change
 const options: FormOptions[] = [
@@ -212,8 +215,8 @@ const submitForm = (scope: Scope) => {
 }
 
 // 表单重置 
-const resetForm = (scope: Scope) => {
-  scope.form.resetFields()
+const resetForm = () => {
+  form.value.resetFields()
 }
 
 
