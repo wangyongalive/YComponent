@@ -4,7 +4,9 @@ export interface TableOptions {
   // 字段名称
   prop?: string
   // 对齐方式
-  align: "left" | 'center' | 'right',
+  align?: "left" | 'center' | 'right',
   // 自定义列模板的插槽名
   slot?: string
+  // 宽度
+  width?: string | number
 }
