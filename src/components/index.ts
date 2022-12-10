@@ -11,8 +11,9 @@ import chooseDate from './chooseDate/index'
 import chooseCity from './chooseCity/index'
 import form from './form/index'
 import modalForm from './modalForm/index'
+import table from './table/index'
 const components = [chooseArea, chooseIcon, trend, notification, list, menu, progress, chooseTime, chooseDate,
-  chooseCity, form, modalForm]
+  chooseCity, form, modalForm, table]
 
 export default {
   install(app: App) {
