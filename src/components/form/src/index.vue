@@ -95,8 +95,9 @@ let onRemove = (file: File, fileList: FileList) => {
 }
 let onSuccess = (response: any, file: File, fileList: FileList) => {
   // 上传图片成功 给表单上传项赋值
-  // let uploadItem = props.options.find(item => item.type === 'upload')!
-  // model.value[uploadItem.prop!] = { response, file, fileList }
+  let uploadItem = props.options.find(item => item.type === 'upload')!
+  model.value[uploadItem.prop!] = { response, file, fileList }
+  console.log('model', model)
   emits('on-success', { response, file, fileList })
 }
 let onError = (err: any, file: File, fileList: FileList) => {
