@@ -1,7 +1,8 @@
 <template>
   <div>
     <y-table :data="tableData" :options="options" elementLoadingText="加载中..." elementLoadingBackground="rgba(0,0,0,.8)"
-      :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50" @check="check" @close="close">
+      :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50" isEditRow
+      v-model:editRowIndex="editRowIndex" @confirm="confirm" @cancel="cancel">
       <template #date="{ scope }">
         <el-icon-timer></el-icon-timer>
         {{ scope.row.date }}
@@ -28,6 +29,10 @@
           <el-button type="danger" size="small" @click="cancel2(scope)">取消</el-button>
         </div>
       </template>
+      <template #editRow="scope">
+        <el-button size="small" type="primary" @click="rowSure(scope)">确认</el-button>
+        <el-button size="small" type="danger">取消</el-button>
+      </template>
     </y-table>
   </div>
 </template>
@@ -43,6 +48,7 @@ interface TableData {
 }
 
 const tableData = ref<TableData[]>([])
+let editRowIndex = ref<string>('')
 // 模拟异步请求
 setTimeout(() => {
   tableData.value = [
@@ -80,6 +86,7 @@ let svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
+
 // 表格配置
 const options: TableOptions[] = [{
   prop: 'date',
@@ -102,12 +109,13 @@ const options: TableOptions[] = [{
   action: true
 }]
 
+
 // emit
-const check = (scope: any) => {
+const confirm = (scope: any) => {
   console.log(scope)
 }
 
-const close = (scope: any) => {
+const cancel = (scope: any) => {
   console.log(scope)
 }
 
@@ -115,7 +123,7 @@ const close = (scope: any) => {
 // scope
 // 操作 -- 编辑
 const edit = (scoped: any) => {
-  console.log(scoped);
+  editRowIndex.value = 'edit'
 }
 
 // 操作 -- 取消
@@ -128,6 +136,10 @@ const sure = (scoped: any) => {
 
 // 取消
 const cancel2 = (scoped: any) => {
+  console.log(scoped);
+}
+
+const rowSure = (scoped: any) => {
   console.log(scoped);
 }
 
