@@ -2,7 +2,7 @@
   <el-table :data="tableData" v-loading="isLoading" :element-loading-text="elementLoadingText"
     :element-loading-spinner="elementLoadingSpinner" :element-loading-background="elementLoadingBackground"
     :element-loading-svg="elementLoadingSvg" :element-loading-svg-view-box="elementLoadingSvgViewBox"
-    @row-click="rowClick">
+    @row-click="rowClick" v-bind="$attrs">
     <!-- <el-table-column v-for="(item, index) in tableOption" :key="index" :prop="item.prop" :label="item.label"
       :width="item.width" :align="item.align" /> -->
     <template v-for="(item, index) in tableOption" :key="index">
@@ -47,6 +47,13 @@
       </template>
     </el-table-column>
   </el-table>
+
+  <div v-if="pagination && !isLoading" class="pagination" :style="{ justifyContent }">
+
+    <el-pagination v-model:currentPage="currentPage2" :page-sizes="pageSizes" :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"></el-pagination>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -101,9 +108,54 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  // 是否显示分页
+  pagination: {
+    type: Boolean,
+    default: false
+  },
+  // 显示分页的对齐方式
+  paginationAlign: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'left'
+  },
+  // 当前是第几页
+  currentPage: {
+    type: Number,
+    default: 1
+  },
+  // 当前一页多少条数据
+  pageSize: {
+    type: Number,
+    default: 10
+  },
+  // 显示分页数据多少条的选项
+  pageSizes: {
+    type: Array,
+    default: () => [10, 20, 30, 40]
+  },
+  // 数据总条数
+  total: {
+    type: Number,
+    default: 0
+  }
 })
 
-const emits = defineEmits(['confirm', 'cancel', 'update:editRowIndex'])
+const emits = defineEmits(['confirm', 'cancel', 'update:editRowIndex', 'size-change', 'current-change'])
+
+let currentPage2 = ref(props.currentPage)
+let currentPage3 = ref(props.currentPage)
+
+// 分页的每一页数据变化
+let handleSizeChange = (val: number) => {
+  emits('size-change', val)
+  // console.log(val)
+}
+// 分页页数改变
+let handleCurrentChange = (val: number) => {
+  emits('current-change', val)
+  console.log('current-change', val)
+}
+
 
 // 过滤操作项之后的配置
 const tableOption = computed(() => props.options.filter((item) => !item.action))
@@ -111,6 +163,14 @@ const tableOption = computed(() => props.options.filter((item) => !item.action))
 const actionOption = computed(() => props.options.find((item) => item.action))
 // 是否在加载中
 const isLoading = computed(() => !props.data || !props.data.length)
+
+// 表格分页的排列方式
+let justifyContent = computed(() => {
+  if (props.paginationAlign === 'left') return 'flex-start'
+  else if (props.paginationAlign === 'right') return 'flex-end'
+  else return 'center'
+})
+
 
 // 当前被点击的单元格的标识
 const currentEdit = ref<string>('')
@@ -221,5 +281,10 @@ const rowClick = (row: any, column: any) => {
   .close {
     color: green;
   }
+}
+
+.pagination {
+  margin-top: 16px;
+  display: flex;
 }
 </style>
