@@ -9,4 +9,6 @@ export interface TableOptions {
   slot?: string
   // 宽度
   width?: string | number
+  // 是否代表操作项
+  action?: boolean
 }
