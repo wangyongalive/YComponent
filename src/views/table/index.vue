@@ -1,6 +1,7 @@
 <template>
   <div>
-    <y-table :data="tableData" :options="options">
+    <y-table :data="tableData" :options="options" elementLoadingText="加载中..." elementLoadingBackground="rgba(0,0,0,.8)"
+      :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50">
       <template #date="{ scope }">
         <el-icon-timer></el-icon-timer>
         {{ scope.row.date }}
@@ -26,31 +27,52 @@
 
 <script setup lang="ts">
 import { TableOptions } from '@/components/table/src/types';
+import { ref } from 'vue';
 
+interface TableData {
+  date: string,
+  name: string,
+  address: string
+}
 
-// 表格数据
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
+const tableData = ref<TableData[]>([])
+// 模拟异步请求
+setTimeout(() => {
+  tableData.value = [
+    {
+      date: '2016-05-03',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+    },
+    {
+      date: '2016-05-02',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+    },
+    {
+      date: '2016-05-04',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+    },
+    {
+      date: '2016-05-01',
+      name: 'Tom',
+      address: 'No. 189, Grove St, Los Angeles',
+    },
+  ]
+}, 3000)
+
+let svg = `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `
+
 
 // 表格配置
 const options: TableOptions[] = [{
