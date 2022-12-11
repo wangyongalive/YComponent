@@ -11,4 +11,6 @@ export interface TableOptions {
   width?: string | number
   // 是否代表操作项
   action?: boolean
+  // 是否可以编辑
+  editable?: boolean
 }

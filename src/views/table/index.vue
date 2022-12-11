@@ -1,7 +1,7 @@
 <template>
   <div>
     <y-table :data="tableData" :options="options" elementLoadingText="加载中..." elementLoadingBackground="rgba(0,0,0,.8)"
-      :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50">
+      :element-loading-svg="svg" element-loading-svg-view-box="-10, -10, 50, 50" @check="check" @close="close">
       <template #date="{ scope }">
         <el-icon-timer></el-icon-timer>
         {{ scope.row.date }}
@@ -19,7 +19,14 @@
       </template>
       <template #action="{ scope }">
         <el-button type="primary" size="small" @click="edit(scope)">编辑</el-button>
-        <el-button type="danger" size="small" @click="cancel(scope)">删除</el-button>
+        <el-button type="danger" size="small" @click="cancel1(scope)">删除</el-button>
+      </template>
+      <template #cellEdit="{ scope }">
+        <!-- 按钮设置布局 -->
+        <div style="display: flex">
+          <el-button type="primary" size="small" @click="sure(scope)">确认</el-button>
+          <el-button type="danger" size="small" @click="cancel2(scope)">取消</el-button>
+        </div>
       </template>
     </y-table>
   </div>
@@ -73,18 +80,19 @@ let svg = `
         " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
       `
 
-
 // 表格配置
 const options: TableOptions[] = [{
   prop: 'date',
   label: '日期',
   slot: 'date',
-  width: 150
+  width: 200,
+  editable: true
 },
 {
   prop: 'name',
   label: '姓名',
-  slot: 'name'
+  slot: 'name',
+  editable: true
 }, {
   prop: 'address',
   label: '地址',
@@ -94,13 +102,34 @@ const options: TableOptions[] = [{
   action: true
 }]
 
-
-const edit = (scoped: any) => {
-  console.log(scoped);
-
+// emit
+const check = (scope: any) => {
+  console.log(scope)
 }
 
-const cancel = (scoped: any) => { }
+const close = (scope: any) => {
+  console.log(scope)
+}
+
+
+// scope
+// 操作 -- 编辑
+const edit = (scoped: any) => {
+  console.log(scoped);
+}
+
+// 操作 -- 取消
+const cancel1 = (scoped: any) => { console.log(scoped); }
+
+//  确定
+const sure = (scoped: any) => {
+  console.log(scoped);
+}
+
+// 取消
+const cancel2 = (scoped: any) => {
+  console.log(scoped);
+}
 
 
 </script>
