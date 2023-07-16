@@ -75,11 +75,6 @@ let data = [
     index: '/progress'
   },
   {
-    icon: 'ScaleToOriginal',
-    name: '日历',
-    index: '/calendar'
-  },
-  {
     icon: 'Setting',
     name: '表单',
     index: '/form'
