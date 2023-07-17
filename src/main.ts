@@ -15,6 +15,7 @@ const app = createApp(App)
 // 全局注册图标 牺牲一点性能
 // el-icon-xxx
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  console.log(key, component)
   // 注册全部组件
   app.component(`el-icon${toLine(key)}`, component);
 }

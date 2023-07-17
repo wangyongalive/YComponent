@@ -1,6 +1,7 @@
 import { App } from 'vue'
 import chooseArea from './chooseArea/index'
 import chooseIcon from './chooseIcon/index'
+import chooseIcon2 from './chooseIcon2/index'
 import trend from './trend/index'
 import notification from './notification/index'
 import list from './list/index'
@@ -12,7 +13,7 @@ import chooseCity from './chooseCity/index'
 import form from './form/index'
 import modalForm from './modalForm/index'
 import table from './table/index'
-const components = [chooseArea, chooseIcon, trend, notification, list, menu, progress, chooseTime, chooseDate,
+const components = [chooseArea, chooseIcon2, chooseIcon, trend, notification, list, menu, progress, chooseTime, chooseDate,
   chooseCity, form, modalForm, table]
 
 export default {

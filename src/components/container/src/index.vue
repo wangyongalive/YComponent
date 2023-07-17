@@ -10,7 +10,7 @@
         <nav-header v-model:collapse="isCollapse"></nav-header>
       </el-header>
       <el-main>
-        <RouterView></RouterView>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -24,6 +24,7 @@ const isCollapse = ref(true)
 
 </script>
 <style lang="scss" scoped>
+// 可以选中
 .el-header {
   padding: 0;
   border-bottom: 1px solid #eee;

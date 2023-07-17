@@ -14,8 +14,7 @@
       <span>导航3</span>
     </el-menu-item>
   </el-menu> -->
-  <y-menu :collapse="collapse" :data="data" router :defaultActive="$route.path" class="el-menu-vertical-demo">
-  </y-menu>
+  <y-menu :collapse="collapse" :data="data" router :defaultActive="$route.path" class="el-menu-vertical-demo" />
 </template>
 
 <script setup lang="ts">
@@ -33,6 +32,11 @@ let data = [
     icon: 'Check',
     name: '图标选择器',
     index: '/chooseIcon'
+  },
+  {
+    icon: 'Check',
+    name: '图标选择器2',
+    index: '/chooseIcon2'
   },
   {
     icon: 'Location',
