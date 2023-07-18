@@ -15,8 +15,7 @@
       <component :is="`el-icon${toLine(upIcon)}`" v-if="type == 'up'"
         :style="{ color: !reverseColor ? upIconColor : '#52c41a' }">
       </component>
-      <component :is="`el-icon${toLine(downIcon)}`" v-else
-        :style="{ color: !reverseColor ? downIconColor : '#f5222d' }">
+      <component :is="`el-icon${toLine(downIcon)}`" v-else :style="{ color: !reverseColor ? downIconColor : '#f5222d' }">
       </component>
 
     </div>

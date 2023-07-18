@@ -3,7 +3,7 @@
         <slot></slot>
     </el-button>
     <div class="y-choose-icon-dialog-body-height">
-        <el-dialog :title="title" :model-value="visible" class="y-dialog">
+        <el-dialog :title="title" :model-value="visible" class="y-dialog" @close="handleClose">
             <el-scrollbar height="500px">
                 <div class="container" @click.stop="clickItem">
                     <div class="item" v-for="(item) in Object.keys(ElementPlusIconsVue)" :key="item" :data-item="item">
@@ -39,7 +39,7 @@ const handleClose = () => {
 // 点击按钮显示弹出框
 const handleClick = () => {
     // 需要修改父组件的数据  emits
-    emits("update:visible", !props.visible);
+    emits("update:visible", true);
 };
 
 // 点击图标

@@ -121,6 +121,7 @@ const clickAction = (action: ActionOptions, index: Number) => {
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        border-right: 1px solid #eee;
       }
 
       .a-icon {
@@ -129,11 +130,16 @@ const clickAction = (action: ActionOptions, index: Number) => {
         align-items: center;
         margin-right: 4px;
       }
+
+      // css 选择器
+      >.a-item:last-child {
+        border-right: 0
+      }
     }
   }
 
   .border {
-    border-right: 1px solid #eee;
+    // border-right: 1px solid #eee;
   }
 }
 </style>
