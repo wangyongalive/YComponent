@@ -7,7 +7,7 @@ export default defineComponent({
   props: {
     // 导航菜单的数据
     data: {
-      type: Array as PropType<any[]>,
+      type: Array as PropType<any[]>, // 外部传入的键名可能是任意的
       required: true
     },
     // 默认选中的菜单
