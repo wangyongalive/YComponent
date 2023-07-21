@@ -19,6 +19,7 @@ const endChange = (val: endValue) => {
   console.log(val)
 }
 
+// 开始时间的配置
 const startTimeOptions = {
   size: 'large'
 }
