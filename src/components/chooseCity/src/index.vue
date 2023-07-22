@@ -41,7 +41,7 @@
               <el-col :span="22" class="city-name">
                 <!-- 绑定id -->
                 <div class="city-name-item" v-for="item in val" :key="item.id" @click="clickItem(item)">{{
-                    item.name
+                  item.name
                 }}</div>
               </el-col>
             </el-row>
@@ -55,7 +55,7 @@
         </div>
         <el-scrollbar max-height="300px">
           <template v-for="(item, index) in Object.values(provices)" :key="index">
-            <el-row v-for="(item1, index1) in item" :key="index1" :id="item1.id">
+            <el-row v-for="(item1, index1) in item" :key="index1" :id="item1.id" style="margin-bottom: 10px;">
               <el-col :span="3">{{ item1.name }}:</el-col>
               <el-col :span="21" class="province-name">
                 <div class="province-name-item" v-for="(item2, index2) in item1.data" :key="index2">
@@ -116,7 +116,7 @@ let clickChat = (key: string) => {
 
 // 下拉框选择
 let changeSelect = (val: number) => {
-  let city = options.value.find(item => item.id === val)!
+  let city = options.value.find(item => item.id === val)! // 保证有值
   result.value = city.name
   if (radioValue.value === '按城市') {
     emits('changeCity', city)
@@ -155,12 +155,14 @@ let filterMethod = (val: string) => {
   display: flex;
   align-items: center;
   width: fit-content;
+  /*如何不设置 宽度沾满 弹出框的箭头位置不对  */
   cursor: pointer;
 
   svg {
     width: 1em;
     height: 1em;
     position: relative;
+    /*会占据原来位置 top 也有效*/
     top: 2px;
     margin-left: 4px;
     transition: all 0.25s linear;
@@ -205,10 +207,9 @@ let filterMethod = (val: string) => {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    gap: 6px; // 设置元素间距
 
     &-item {
-      margin-right: 6px;
-      margin-bottom: 6px;
       cursor: pointer;
     }
   }

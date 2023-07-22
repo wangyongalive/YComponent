@@ -45,6 +45,7 @@ let endDateDisabled = ref<boolean>(true)
 let startDisabledDate = (time: Date) => {
   if (props.disableToday) return time.getTime() < Date.now() - 1000 * 60 * 60 * 24
 }
+
 // 禁用结束日期的函数
 let endDisabledDate = (time: Date) => {
   if (startDate.value) {
@@ -73,6 +74,4 @@ watch(() => endDate.value, val => {
 })
 </script>
 
-<style lang='scss' scoped>
-
-</style>
+<style lang='scss' scoped></style>
