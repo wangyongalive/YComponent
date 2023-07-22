@@ -214,7 +214,7 @@ const submitForm = (scope: Scope) => {
   })
 }
 
-// 表单重置 
+// 表单重置 重写了重置表单的方法
 const resetForm = () => {
   form.value.resetFields()
 }
@@ -253,6 +253,4 @@ let handleBeforeUpload = (val: any) => {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

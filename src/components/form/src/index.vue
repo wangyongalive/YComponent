@@ -25,6 +25,7 @@
         </component>
       </el-form-item>
     </template>
+    <!-- 表单操作项 -->
     <el-form-item>
       <!-- 提交 重置等按钮 -->
       <!-- 作用域插槽 把表单和表单的值传递出去 -->
@@ -55,7 +56,7 @@ const props = defineProps({
   }
 })
 
-// 初始化的值 不能是null 否则会出现找不到值的报错
+// 初始化的值 不能是{} 否则会出现找不到值的报错
 // v-if="model" 来解决
 const model = ref<any>(null)
 const rules = ref<any>(null)
@@ -150,7 +151,7 @@ let onRemove = (file: File, fileList: FileList) => {
   emits('on-remove', { file, fileList })
 }
 let onSuccess = (response: any, file: File, fileList: FileList) => {
-  // 上传图片成功 给表单上传项赋值
+  // 上传图片成功 给表单上传项赋值 以供表单检验 
   let uploadItem = props.options.find(item => item.type === 'upload')!
   model.value[uploadItem.prop!] = { response, file, fileList }
   console.log('model', model)
