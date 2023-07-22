@@ -185,6 +185,4 @@ const rowSure = (scoped: any) => {
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

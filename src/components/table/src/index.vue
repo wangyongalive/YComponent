@@ -9,9 +9,11 @@
       <el-table-column :prop="item.prop" :label="item.label" :width="item.width" :align="item.align">
         <!-- #defalut="scope"  表格自身的插槽-->
         <template #default="scope">
+          <!-- 行编辑 -->
           <template v-if="scope.row.rowEdit">
             <el-input size="small" v-model="scope.row[item.prop!]"></el-input>
           </template>
+          <!-- 单元格编辑 -->
           <template v-else>
             <!-- 当前单元格被点击  显示输入框-->
             <template v-if="(scope.$index + scope.column.id) === currentEdit">
@@ -29,7 +31,7 @@
             </template>
             <!-- 当前单元格未被点击-->
             <template v-else>
-              <!-- slot 显示自定义内容 -->
+              <!-- slot 显示自定义内容 name也是动态的-->
               <slot v-if="item.slot" :name="item.slot" :scope="scope"></slot>
               <span v-else>{{ scope.row[item.prop!] }}</span>
               <!-- 动态显示编辑图标 -->
@@ -143,7 +145,6 @@ const props = defineProps({
 const emits = defineEmits(['confirm', 'cancel', 'update:editRowIndex', 'size-change', 'current-change'])
 
 let currentPage2 = ref(props.currentPage)
-let currentPage3 = ref(props.currentPage)
 
 // 分页的每一页数据变化
 let handleSizeChange = (val: number) => {
@@ -178,9 +179,6 @@ const currentEdit = ref<string>('')
 
 // 拷贝一份表格的数据
 const tableData = ref<any[]>(cloneDeep(props.data))
-// 拷贝一份按钮的标识
-const cloneEditRowIndex = ref<string>(props.editRowIndex)
-
 
 // 如果data的数据变了 要重新给tableData赋值
 // 只需要监听一次就可以了
@@ -191,12 +189,6 @@ watch(() => props.data, val => {
     item.rowEdit = false
   })
 }, { deep: true })
-
-// 监听父组件传递的标识
-watch(() => props.editRowIndex, val => {
-  if (val) cloneEditRowIndex.value = val
-})
-
 
 
 onMounted(() => {
@@ -240,15 +232,14 @@ const close = (scope: any) => {
 // 点击行的事件
 const rowClick = (row: any, column: any) => {
   // 判断是否是点击的操作项
-  console.log('cloneEditRowIndex.value', cloneEditRowIndex.value, '!!')
   console.log('props.editRowIndex', props.editRowIndex, '!!')
   if (column.label === actionOption.value!.label) {
-    if (props.isEditRow && props.editRowIndex !== '' && cloneEditRowIndex.value === props.editRowIndex) {
+    if (props.isEditRow && props.editRowIndex !== '') {
       // 编辑行的操作
       row.rowEdit = !row.rowEdit
       // 重置其他数据的rowEdit
       tableData.value.map(item => {
-        console.log('item !== row', item !== row)
+        // console.log('item !== row', item !== row)
         if (item !== row) item.rowEdit = false
       })
       // 重置按钮的标识
