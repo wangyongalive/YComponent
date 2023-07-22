@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogVisible" v-bind="$attrs" :class="{ 'scroll-height': isScroll }">
+  <el-dialog :modelValue="visible" v-bind="$attrs" :class="{ 'scroll-height': isScroll }" @close="close">
     <template #default>
       <y-form label-width="100px" :options="options" ref="form" @on-change="onChange" @before-upload="beforeUpload"
         @on-preview="onPreview" @on-remove="onRemove" @before-remove="beforeRemove" @on-success="onSuccess"
@@ -61,8 +61,9 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['update:visible'])
+
 // 弹出框的显示与隐藏
-const dialogVisible = ref<boolean>(props.visible)
+// const dialogVisible = ref<boolean>(props.visible)
 
 
 
@@ -70,14 +71,18 @@ const dialogVisible = ref<boolean>(props.visible)
 // 表单实例 并通过作用域插槽暴露出去
 let form = ref()
 
-watch(() => props.visible, (val) => {
-  dialogVisible.value = val
-})
+// watch(() => props.visible, (val) => {
+//   dialogVisible.value = val
+// })
 
 // 要加value
-watch(() => dialogVisible.value, (val) => {
-  emits('update:visible', val)
-})
+// watch(() => dialogVisible.value, (val) => {
+//   emits('update:visible', val)
+// })
+
+const close = () => {
+  emits('update:visible', false)
+}
 
 </script>
 

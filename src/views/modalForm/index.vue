@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-button type="primary" size="default" @click="open">open</el-button>
-    <y-modal-form isScroll v-model:visible="visible" :options="options" title="编辑用户" width="50%"
-      :on-change="handleChange" :on-success="handleSuccess">
+    <y-modal-form isScroll v-model:visible="visible" :options="options" title="编辑用户" width="50%" :on-change="handleChange"
+      :on-success="handleSuccess">
       <template #footer="{ form }">
         <el-button @click="cancel(form)">取消</el-button>
         <el-button type="primary" @click="confirm(form)">
@@ -120,7 +120,7 @@ const options: FormOptions[] = [
       {
         required: true,
         message: '职位不能为空',
-        trigger: 'change'
+        trigger: 'change'  // 单选 多选只有change变化的说法
       }
     ],
     children: [
@@ -235,6 +235,4 @@ const options: FormOptions[] = [
 ]
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
