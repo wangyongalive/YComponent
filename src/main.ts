@@ -1,25 +1,26 @@
-import { createApp } from 'vue'
+import { createApp } from "vue";
 // import './style.css'
-import App from './App.vue'
-import router from './router/index'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import { toLine } from './utls/index'
-import ui from './components/index'
-import './mock'
+import App from "./App.vue";
+import router from "./router/index";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
+import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import { toLine } from "./utls/index";
+// import ui from './components/index
+// @ts-ignore
+import ui from "../dist/my-lib.js";
+import "../lib/style.css";
+import "./mock";
 
-const app = createApp(App)
-
+const app = createApp(App);
 
 // 全局注册图标 牺牲一点性能
 // el-icon-xxx
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  console.log(key, component)
+  console.log(key, component);
   // 注册全部组件
   app.component(`el-icon${toLine(key)}`, component);
 }
 
-
-app.use(router).use(ElementPlus).use(ui)
-app.mount('#app')
+app.use(router).use(ElementPlus).use(ui);
+app.mount("#app");

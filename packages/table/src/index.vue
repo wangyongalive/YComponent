@@ -103,7 +103,7 @@
 <script setup lang="ts">
 import { PropType, computed, ref, onMounted, watch } from "vue";
 import { TableOptions } from "./types";
-import { toLine } from "@/utls";
+import { toLine } from "../../utls";
 import cloneDeep from "lodash/cloneDeep";
 
 const props = defineProps({

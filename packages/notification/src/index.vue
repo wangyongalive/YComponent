@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts" name="notification">
-import { toLine } from "@/utls/index";
+import { toLine } from "../../utls/index";
 const props = defineProps({
   // 显示的图标
   icon: {
