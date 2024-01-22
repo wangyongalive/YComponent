@@ -4,6 +4,8 @@ import VueSetupExtend from "vite-plugin-vue-setup-extend";
 import { fileURLToPath, URL } from "node:url";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import { resolve } from "path";
+
+console.log(__dirname, '__dirname__dirname__dirname__dirname')
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), VueSetupExtend(), vueJsx()],
@@ -16,6 +18,9 @@ export default defineConfig({
       "~": fileURLToPath(new URL("./src", import.meta.url)),
     },
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
+    dedupe: [
+      'vue'
+    ]
   },
   build: {
     lib: {
@@ -34,6 +39,7 @@ export default defineConfig({
         globals: {
           vue: "Vue",
         },
+        exports: 'named'
       },
     },
   },

@@ -1,23 +1,14 @@
 {
-  "name": "my-vue-app",
+  "name": "y-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "files": ["dist"],
-  "main": "./dist/my-lib.umd.cjs",
-  "module": "./dist/my-lib.js",
-  "exports": {
-    ".": {
-      "import": "./dist/my-lib.js",
-      "require": "./dist/my-lib.umd.cjs"
-    }
-  },
   "scripts": {
     "dev": "vite --open",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "build:component": "node ./command/build.js",
-    "lib":"npm run build:component"
+    "lib": "npm run build:component"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
